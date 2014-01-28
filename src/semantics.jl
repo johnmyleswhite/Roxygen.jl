@@ -23,6 +23,8 @@ function parse_exported!(lexemes::Vector{Token},
                          doc::DocumentationChunk)
     doc.exported = true
 
+    i += 1
+
     while i <= length(lexemes) && lexemes[i].kind != DIRECTIVE
         i += 1
     end

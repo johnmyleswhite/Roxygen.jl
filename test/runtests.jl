@@ -4,12 +4,13 @@ anyerrors = false
 using Base.Test
 using Roxygen
 
-my_tests = ["roxygenize.jl"]
+my_tests = ["components.jl", "roxygenize.jl"]
 
 println("Running tests:")
 
+mkdir(Pkg.dir("Roxygen", "output"))
+
 for my_test in my_tests
-	mkdir(Pkg.dir("Roxygen", "output"))
     try
         include(Pkg.dir("Roxygen", "test", my_test))
         println("\t\033[1m\033[32mPASSED\033[0m: $(my_test)")
@@ -20,9 +21,10 @@ for my_test in my_tests
             rethrow()
         end
     end
-	rm(Pkg.dir("Roxygen", "output", "example.md"))
-	rmdir(Pkg.dir("Roxygen", "output"))
 end
+
+rm(Pkg.dir("Roxygen", "output", "example.md"))
+rmdir(Pkg.dir("Roxygen", "output"))
 
 if anyerrors
     throw("Tests failed")

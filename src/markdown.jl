@@ -5,14 +5,19 @@ function markdown(doc::DocumentationChunk)
 		@printf(io, "**Exported**\n\n")
 	end
 
-	@printf(io, "**Name**: %s\n\n", doc.name)
-	@printf(io, "**Description**: %s\n\n", doc.description)
+	if !isempty(doc.name)
+		@printf(io, "**Name**: %s\n\n", doc.name)
+	end
+
+	if !isempty(doc.description)
+		@printf(io, "**Description**: %s\n\n", doc.description)
+	end
 
 	if !isempty(doc.args)
 		@printf(io, "**Arguments**:\n\n")
 		for arg in doc.args
 			@printf(io,
-				    " * %s::%s: %s\n",
+				    "* %s::%s: %s\n",
 				    arg.varname,
 				    arg.vartype,
 				    arg.description)
@@ -44,10 +49,12 @@ function markdown(doc::DocumentationChunk)
 		@printf(io, "\n")
 	end
 
-	@printf(io,
-		    "**Examples**:\n\n```%s```\n",
-		    replace(replace(doc.examples, r"^\n+", "\n"),
-		    	    r"\n+$", "\n"))
+	if !isempty(doc.examples)
+		@printf(io,
+			    "**Examples**:\n\n```%s```\n",
+			    replace(replace(doc.examples, r"^\n+", "\n"),
+			    	    r"\n+$", "\n"))
+	end
 
     return bytestring(io)
 end
