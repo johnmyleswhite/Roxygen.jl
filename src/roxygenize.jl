@@ -26,7 +26,7 @@ function process(srcpath::String, verbose::Bool = false)
 	return summaries
 end
 
-function roxygenize(srcdir::String, destdir::String, verbose::Bool = false)
+function roxygenize(srcdir::String, destdir::String; verbose::Bool = false)
 	srcpaths = readdir(srcdir)
 	if !ispath(destdir)
 		try
